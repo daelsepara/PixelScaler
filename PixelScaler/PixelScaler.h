@@ -9,6 +9,7 @@
 #include "Interpolate4.h"
 #include "Interpolate8.h"
 #include "kreed.h"
+#include "Kuwahara.h"
 #include "lq.h"
 #include "ReverseAA.h"
 #include "Rotate.h"
@@ -36,8 +37,8 @@ private:
 	unsigned char* Buffer(int Length, unsigned char c)
 	{
 		auto Channels = 3;
-		
-		auto buffer = (unsigned char*) malloc(Length * Channels);
+
+		auto buffer = (unsigned char*)malloc(Length * Channels);
 
 		for (auto i = 0; i < Length; i++)
 		{
@@ -61,7 +62,7 @@ private:
 		memcpy(dst, src, Length * sizeof(unsigned char));
 	}
 
-public: 
+public:
 
 	unsigned char *ScaledImage = NULL;
 
@@ -91,7 +92,7 @@ public:
 				// C-S-B => |-+-|
 				//   |      |3|4|
 				//   D      .---.     
-				
+
 				auto S = CLR(Input, srcx, srcy, x, y);
 				auto A = CLR(Input, srcx, srcy, x, y, 0, -1);
 				auto B = CLR(Input, srcx, srcy, x, y, 1, 0);
@@ -99,7 +100,7 @@ public:
 				auto D = CLR(Input, srcx, srcy, x, y, 0, 1);
 
 				int P[5];
-				
+
 				P[1] = IsLike(C, A) && IsNotLike(C, D) && IsNotLike(A, B) ? A : S;
 				P[2] = IsLike(A, B) && IsNotLike(A, C) && IsNotLike(B, D) ? B : S;
 				P[3] = IsLike(D, C) && IsNotLike(D, B) && IsNotLike(C, A) ? C : S;
@@ -447,9 +448,9 @@ public:
 		EPX(Input, srcx, srcy);
 
 		auto temp = New(SizeX, SizeY);
-		
+
 		Copy(temp, ScaledImage, SizeX * SizeY * Channels);
-		
+
 		EPX(temp, SizeX, SizeY);
 
 		_ScaleX = 4;
@@ -473,7 +474,7 @@ public:
 				//  /|\     |-+-+-|
 				// G H I    |7|8|9|
 				//          .-----.
-				
+
 				auto E = CLR(Input, srcx, srcy, x, y);
 				auto A = CLR(Input, srcx, srcy, x, y, -1, -1);
 				auto B = CLR(Input, srcx, srcy, x, y, 0, -1);
@@ -592,7 +593,7 @@ public:
 		int offset = 0;
 
 		for (int i = 0; i < SizeY; i++) {
-			
+
 			for (int j = 0; j < SizeX; j++) {
 
 				auto x = (x_ratio * j) >> 16;
@@ -623,7 +624,7 @@ public:
 			}
 		}
 	}
-	
+
 	void LQ2X(unsigned char*& Input, int srcx, int srcy)
 	{
 		Init(srcx, srcy, 2, 2);
@@ -777,7 +778,7 @@ public:
 			for (auto x = 0; x < srcx; x++)
 			{
 				int C[9];
-				
+
 				C[0] = CLR(Input, srcx, srcy, x, y, -1, -1);
 				C[1] = CLR(Input, srcx, srcy, x, y, 0, -1);
 				C[2] = CLR(Input, srcx, srcy, x, y, 1, -1);
@@ -787,22 +788,22 @@ public:
 				C[6] = CLR(Input, srcx, srcy, x, y, -1, 1);
 				C[7] = CLR(Input, srcx, srcy, x, y, 0, 1);
 				C[8] = CLR(Input, srcx, srcy, x, y, 1, 1);
-				
+
 				int P[5];
-				
+
 				P[1] = (IsLike(C[1], C[0]) && IsLike(C[1], C[3])) ? Interpolate(C[1], C[0], C[3]) : C[4];
 				P[2] = (IsLike(C[2], C[1]) && IsLike(C[2], C[5])) ? Interpolate(C[2], C[1], C[5]) : C[4];
 				P[3] = (IsLike(C[6], C[3]) && IsLike(C[6], C[7])) ? Interpolate(C[6], C[3], C[7]) : C[4];
 				P[4] = (IsLike(C[7], C[5]) && IsLike(C[7], C[8])) ? Interpolate(C[7], C[5], C[8]) : C[4];
-				
+
 				for (auto Pixel = 1; Pixel < 5; Pixel++)
 				{
 					Write4RGB(ScaledImage, srcx, srcy, x, y, Pixel, P[Pixel]);
 				}
 			}
 		}
-	}	
-	
+	}
+
 	void Eagle3X(unsigned char*& Input, int srcx, int srcy)
 	{
 		Init(srcx, srcy, 3, 3);
@@ -834,7 +835,7 @@ public:
 				C[8] = CLR(Input, srcx, srcy, x, y, 1, 1);
 
 				int P[10];
-				
+
 				P[1] = (IsLike(C[0], C[1]) && IsLike(C[0], C[3])) ? Interpolate(C[0], C[1], C[3]) : C[4];
 				P[2] = (IsLike(C[0], C[1]) && IsLike(C[0], C[3]) && IsLike(C[2], C[1]) && IsLike(C[2], C[5])) ? Interpolate(Interpolate(C[0], C[1], C[3]), Interpolate(C[2], C[1], C[5])) : C[4];
 				P[3] = (IsLike(C[2], C[1]) && IsLike(C[2], C[5])) ? Interpolate(C[2], C[1], C[5]) : C[4];
@@ -938,7 +939,7 @@ public:
 			}
 		}
 	}
-	
+
 	void Ultra2X(unsigned char*& Input, int srcx, int srcy)
 	{
 		Init(srcx, srcy, 2, 2);
@@ -1033,7 +1034,7 @@ public:
 				auto pixel = CLR(Input, srcx, srcy, x, y);
 
 				auto subPixel = RGBINT((Red(pixel) * 5) >> 3, (Green(pixel) * 5) >> 3, (Blue(pixel) * 5) >> 3);
-				
+
 				P[1] = pixel;
 				P[2] = pixel;
 				P[3] = subPixel;
@@ -1270,7 +1271,7 @@ public:
 				int P[5];
 
 				P[1] = P[2] = P[3] = P[4] = c4;
-				
+
 				if (IsNotLike(c1, c7) && IsNotLike(c3, c5))
 				{
 					P[1] = (IsLike(c3, c1)) ? Interpolate(Interpolate(c1, c3), c4, 5, 3) : c4;
@@ -2146,5 +2147,12 @@ public:
 				}
 			}
 		}
+	}
+
+	void Kuwahara(unsigned char*& Input, int srcx, int srcy, int win)
+	{
+		Init(srcx, srcy, 1, 1);
+
+		_Kuwahara(ScaledImage, Input, srcx, srcy, win);
 	}
 };

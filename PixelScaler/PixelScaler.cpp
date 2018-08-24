@@ -146,7 +146,7 @@ int main(int argc, char** argv)
 
 		exit(1);
 	}
-	
+
 	Parameters parameters;
 
 	char InputFile[200];
@@ -191,6 +191,7 @@ int main(int argc, char** argv)
 			fprintf(stderr, "advinterp2x, advinterp3x, 2xscl\n");
 			fprintf(stderr, "xbr2x, xbr3x, xbr4x\n");
 			fprintf(stderr, "xbrz2x, xbrz3x, xbrz4x, xbrz5x, xbrz6x\n");
+			fprintf(stderr, "kuwahara,kuwahara7,kuwahara9,kuwahara11\n");
 			fprintf(stderr, "\n");
 
 			exit(0);
@@ -286,13 +287,13 @@ int main(int argc, char** argv)
 				fprintf(stderr, "Scaling: Bilinear\n");
 				parameters.Bilinear = true;
 			}
-			
+
 			if (!type.compare("lq2x"))
 			{
 				fprintf(stderr, "Scaling: LQ2X\n");
 				parameters.LQ2X = true;
 			}
-			
+
 			if (!type.compare("lq3x"))
 			{
 				fprintf(stderr, "Scaling: LQ3X\n");
@@ -376,7 +377,7 @@ int main(int argc, char** argv)
 				fprintf(stderr, "Scaling: Horizontal Scanlines (2X)\n");
 				parameters.Horiz2X = true;
 			}
-			
+
 			if (!type.compare("horiz3x"))
 			{
 				fprintf(stderr, "Scaling: Horizontal Scanlines (3X)\n");
@@ -490,6 +491,34 @@ int main(int argc, char** argv)
 				fprintf(stderr, "Scaling: Reverse Anti-Aliasing (2X)\n");
 				parameters.ReverseAA = true;
 			}
+
+			if (!type.compare("kuwahara"))
+			{
+				fprintf(stderr, "Filtering: Kuwahara Smoothing and Edge-preserving filter (1X)\n");
+				parameters.Kuwahara = true;
+				parameters.Window = 5;
+			}
+
+			if (!type.compare("kuwahara7"))
+			{
+				fprintf(stderr, "Filtering: Kuwahara Smoothing and Edge-preserving filter (1X) using a 7x7 window\n");
+				parameters.Kuwahara = true;
+				parameters.Window = 7;
+			}
+
+			if (!type.compare("kuwahara9"))
+			{
+				fprintf(stderr, "Filtering: Kuwahara Smoothing and Edge-preserving filter (1X) using a 9x9 window\n");
+				parameters.Kuwahara = true;
+				parameters.Window = 9;
+			}
+
+			if (!type.compare("kuwahara11"))
+			{
+				fprintf(stderr, "Filtering: Kuwahara Smoothing and Edge-preserving filter (1X) using a 11x11 window\n");
+				parameters.Kuwahara = true;
+				parameters.Window = 11;
+			}
 		}
 
 		ParseInt(arg, "/magnification=", "Magnification", parameters.Magnification);
@@ -497,22 +526,22 @@ int main(int argc, char** argv)
 
 		if (!arg.compare(0, 7, "/input=") && arg.length() > 7)
 		{
-			#if defined(WIN32) || defined(_WIN32) || defined(__WIN32) && !defined(__CYGWIN__)
-				strncpy_s(InputFile, &argv[i][7], sizeof(InputFile));
-			#else
-				strncpy(InputFile, &argv[i][7], sizeof(InputFile));
-			#endif
+#if defined(WIN32) || defined(_WIN32) || defined(__WIN32) && !defined(__CYGWIN__)
+			strncpy_s(InputFile, &argv[i][7], sizeof(InputFile));
+#else
+			strncpy(InputFile, &argv[i][7], sizeof(InputFile));
+#endif
 
 			fprintf(stderr, "Input PNG File: %s\n", InputFile);
 		}
 
 		if (!arg.compare(0, 8, "/output=") && arg.length() > 8)
 		{
-			#if defined(WIN32) || defined(_WIN32) || defined(__WIN32) && !defined(__CYGWIN__)
-				strncpy_s(OutputFile, &argv[i][8], sizeof(OutputFile));
-			#else
-				strncpy(OutputFile, &argv[i][8], sizeof(OutputFile));
-			#endif
+#if defined(WIN32) || defined(_WIN32) || defined(__WIN32) && !defined(__CYGWIN__)
+			strncpy_s(OutputFile, &argv[i][8], sizeof(OutputFile));
+#else
+			strncpy(OutputFile, &argv[i][8], sizeof(OutputFile));
+#endif
 
 			fprintf(stderr, "Output PNG File: %s\n", OutputFile);
 		}
@@ -530,8 +559,7 @@ int main(int argc, char** argv)
 		fprintf(stderr, "%s: error: no input file\n", argv[0]);
 		exit(1);
 	}
-	
-	//auto png = loadpng(InputFile, &srcx, &srcy);
+
 	auto png = loadimage(InputFile, &srcx, &srcy);
 
 	if (parameters.EPX)
@@ -588,7 +616,7 @@ int main(int argc, char** argv)
 	{
 		scaler.Bilinear(png, srcx, srcy);
 	}
-	
+
 	if (parameters.LQ2X)
 	{
 		scaler.LQ2X(png, srcx, srcy);
@@ -608,7 +636,7 @@ int main(int argc, char** argv)
 	{
 		scaler.Eagle2X(png, srcx, srcy);
 	}
-	
+
 	if (parameters.Eagle3X)
 	{
 		scaler.Eagle3X(png, srcx, srcy);
@@ -757,6 +785,11 @@ int main(int argc, char** argv)
 	if (parameters.ReverseAA)
 	{
 		scaler.ReverseAA(png, srcx, srcy);
+	}
+
+	if (parameters.Kuwahara)
+	{
+		scaler.Kuwahara(png, srcx, srcy, parameters.Window);
 	}
 
 	if (strlen(OutputFile) > 0)

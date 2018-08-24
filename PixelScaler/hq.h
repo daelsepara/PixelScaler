@@ -8,13 +8,13 @@ typedef unsigned char byte;
 
 #pragma region standard HQ2x casepath
 void Hq2xKernel(byte pattern, sPixel c0, sPixel c1, sPixel c2, sPixel c3, sPixel c4, sPixel c5, sPixel c6, sPixel c7, sPixel c8, int* Pixel) {
-	
+
 	sPixel e01, e10, e11;
-	
+
 	auto  e00 = e01 = e10 = e11 = c4;
-	
+
 	switch (pattern) {
-		#pragma region HQ2x PATTERNS
+#pragma region HQ2x PATTERNS
 
 	case 0:
 	case 1:
@@ -1358,7 +1358,7 @@ void Hq2xKernel(byte pattern, sPixel c0, sPixel c1, sPixel c2, sPixel c3, sPixel
 		e01 = (IsNotLike(c1, c5)) ? (c4) : (Interpolate(c4, c1, c5, 14, 1, 1));
 	}
 			  break;
-			  #pragma endregion
+#pragma endregion
 	}
 
 	Pixel[1] = e00;
@@ -1373,7 +1373,7 @@ void Hq2x3Kernel(byte pattern, sPixel c0, sPixel c1, sPixel c2, sPixel c3, sPixe
 	sPixel e01, e10, e11, e20, e21;
 	auto e00 = e01 = e10 = e11 = e20 = e21 = c4;
 	switch (pattern) {
-		#pragma region HQ2x3 PATTERNS
+#pragma region HQ2x3 PATTERNS
 
 	case 0:
 	case 1:
@@ -3627,7 +3627,7 @@ void Hq2x3Kernel(byte pattern, sPixel c0, sPixel c1, sPixel c2, sPixel c3, sPixe
 		e01 = (IsNotLike(c1, c5)) ? (c4) : (Interpolate(c4, c1, c5, 10, 3, 3));
 	}
 			  break;
-			  #pragma endregion
+#pragma endregion
 	}
 
 	Pixel[1] = (e00);
@@ -3644,7 +3644,7 @@ void Hq2x4Kernel(byte pattern, sPixel c0, sPixel c1, sPixel c2, sPixel c3, sPixe
 	sPixel e01, e10, e11, e20, e21, e30, e31;
 	auto e00 = e01 = e10 = e11 = e20 = e21 = e30 = e31 = c4;
 	switch (pattern) {
-		#pragma region HQ2x4 PATTERNS
+#pragma region HQ2x4 PATTERNS
 
 	case 0:
 	case 1:
@@ -6396,7 +6396,7 @@ void Hq2x4Kernel(byte pattern, sPixel c0, sPixel c1, sPixel c2, sPixel c3, sPixe
 		e01 = (IsNotLike(c1, c5)) ? (c4) : (Interpolate(c4, c1, c5, 6, 1, 1));
 	}
 			  break;
-			  #pragma endregion
+#pragma endregion
 	}
 
 	Pixel[1] = (e00);
@@ -6415,7 +6415,7 @@ void Hq3xKernel(byte pattern, sPixel c0, sPixel c1, sPixel c2, sPixel c3, sPixel
 	sPixel e01, e02, e10, e11, e12, e20, e21, e22;
 	auto e00 = e01 = e02 = e10 = e11 = e12 = e20 = e21 = e22 = c4;
 	switch (pattern) {
-		#pragma region HQ3x PATTERNS
+#pragma region HQ3x PATTERNS
 
 	case 0:
 	case 1:
@@ -9092,7 +9092,7 @@ void Hq3xKernel(byte pattern, sPixel c0, sPixel c1, sPixel c2, sPixel c3, sPixel
 		e02 = (IsNotLike(c1, c5)) ? (c4) : (Interpolate(c4, c1, c5, 2, 1, 1));
 	}
 			  break;
-			  #pragma endregion
+#pragma endregion
 	}
 	Pixel[1] = (e00);
 	Pixel[2] = (e01);
@@ -9110,7 +9110,7 @@ void Hq4xKernel(byte pattern, sPixel c0, sPixel c1, sPixel c2, sPixel c3, sPixel
 	sPixel e01, e02, e03, e10, e11, e12, e13, e20, e21, e22, e23, e30, e31, e32, e33;
 	auto e00 = e01 = e02 = e03 = e10 = e11 = e12 = e13 = e20 = e21 = e22 = e23 = e30 = e31 = e32 = e33 = c4;
 	switch (pattern) {
-		#pragma region HQ4x PATTERNS
+#pragma region HQ4x PATTERNS
 
 	case 0:
 	case 1:
@@ -13358,9 +13358,9 @@ void Hq4xKernel(byte pattern, sPixel c0, sPixel c1, sPixel c2, sPixel c3, sPixel
 		e03 = (IsNotLike(c1, c5)) ? (c4) : (Interpolate(c4, c1, c5, 2, 1, 1));
 	}
 			  break;
-			  #pragma endregion
+#pragma endregion
 	}
-	
+
 	Pixel[1] = (e00);
 	Pixel[2] = (e01);
 	Pixel[3] = (e02);

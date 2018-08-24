@@ -34,7 +34,7 @@ int Interpolate(int pixel1, int pixel2, int quantifier1, int quantifier2)
 int Interpolate(int pixel1, int pixel2, int pixel3, unsigned char quantifier1, unsigned char quantifier2, unsigned char quantifier3)
 {
 	auto total = (int)(quantifier1 + quantifier2 + quantifier3);
-	
+
 	auto r = (unsigned char)((Red(pixel1) * quantifier1 + Red(pixel2) * quantifier2 + Red(pixel3) * quantifier3) / total);
 	auto g = (unsigned char)((Green(pixel1) * quantifier1 + Green(pixel2) * quantifier2 + Green(pixel3) * quantifier3) / total);
 	auto b = (unsigned char)((Blue(pixel1) * quantifier1 + Blue(pixel2) * quantifier2 + Blue(pixel3) * quantifier3) / total);

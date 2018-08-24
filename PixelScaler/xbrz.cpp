@@ -82,7 +82,7 @@ namespace
 	//
 
 
-	uint32_t*       byteAdvance(uint32_t* ptr, int bytes) { return reinterpret_cast<      uint32_t*>(reinterpret_cast<      char*>(ptr) + bytes); }
+	uint32_t*       byteAdvance(uint32_t* ptr, int bytes) { return reinterpret_cast<uint32_t*>(reinterpret_cast<char*>(ptr) + bytes); }
 	const uint32_t* byteAdvance(const uint32_t* ptr, int bytes) { return reinterpret_cast<const uint32_t*>(reinterpret_cast<const char*>(ptr) + bytes); }
 
 

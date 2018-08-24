@@ -9,7 +9,7 @@ bool AllowAlphaBlending = true;
 bool UseOriginalImplementation = false;
 
 int AbsDifference(int pixel1, int pixel2) {
-	
+
 	static const unsigned char _LUMINANCE_TRIGGER = 48;
 	static const unsigned char _CHROMA_U_TRIGGER = 7;
 	static const unsigned char _CHROMA_V_TRIGGER = 6;

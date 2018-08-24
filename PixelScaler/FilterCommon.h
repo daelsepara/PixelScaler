@@ -15,18 +15,23 @@ void Copy(unsigned char* dst, unsigned char* src, int Length)
 {
 	memcpy(dst, src, Length * sizeof(unsigned char));
 }
-	
+
 int CLR(unsigned char* Input, int srcx, int srcy, int x, int y)
 {
-	auto Channels = 3;
+	if (x >= 0 && x < srcx && y >= 0 && y < srcy)
+	{
+		auto Channels = 3;
 
-	auto index = (y * srcx + x) * Channels;
+		auto index = (y * srcx + x) * Channels;
 
-	auto r = Input[index];
-	auto g = Input[index + 1];
-	auto b = Input[index + 2];
+		auto r = Input[index];
+		auto g = Input[index + 1];
+		auto b = Input[index + 2];
 
-	return (r << 16) + (g << 8) + b;
+		return (r << 16) + (g << 8) + b;
+	}
+
+	return 0;
 }
 
 int CLR(unsigned char* Input, int srcx, int srcy, int x, int y, int dx, int dy)
@@ -314,8 +319,8 @@ int RGBINT(unsigned char r, unsigned char g, unsigned char b)
 
 unsigned char Truncate(unsigned char color)
 {
-	color = (unsigned char) std::max(0, (int)color);
-	color = (unsigned char) std::min(255, (int)color);
+	color = (unsigned char)std::max(0, (int)color);
+	color = (unsigned char)std::min(255, (int)color);
 
 	return color;
 }

@@ -14,7 +14,7 @@ sPixel Interpolate(
 	unsigned char quantifier3,
 	unsigned char quantifier4) {
 	auto total = (quantifier1 + quantifier2 + quantifier3 + quantifier4);
-	
+
 	auto r = (unsigned char)((Red(pixel1) * quantifier1 + Red(pixel2) * quantifier2 + Red(pixel3) * quantifier3 + Red(pixel4) * quantifier4) / total);
 	auto g = (unsigned char)((Green(pixel1) * quantifier1 + Green(pixel2) * quantifier2 + Green(pixel3) * quantifier3 + Green(pixel4) * quantifier4) / total);
 	auto b = (unsigned char)((Blue(pixel1) * quantifier1 + Blue(pixel2) * quantifier2 + Blue(pixel3) * quantifier3 + Blue(pixel4) * quantifier4) / total);

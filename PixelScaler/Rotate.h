@@ -25,11 +25,11 @@ void Rotate90(unsigned char* dst, unsigned char* src, int srcx, int srcy)
 
 	FlipUD(dst, srcy, srcx);
 }
-		
+
 void Rotate180(unsigned char* dst, unsigned char* src, int srcx, int srcy)
 {
 	auto Channels = 3;
-	
+
 	Copy(dst, src, srcx * srcy * Channels);
 
 	FlipUD(dst, srcx, srcy);

@@ -30,7 +30,7 @@ namespace xbrz
 		double steepDirectionThreshold = 2.2;
 		double newTestAttribute = 0; //unused; test new parameters
 	};
-	
+
 	/*
 	-------------------------------------------------------------------------
 	| xBRZ: "Scale by rules" - high quality image upscaling filter by Zenju |
@@ -63,7 +63,7 @@ namespace xbrz
 	THREAD-SAFETY: - parts of the same image may be scaled by multiple threads as long as the [yFirst, yLast) ranges do not overlap!
 	- there is a minor inefficiency for the first row of a slice, so avoid processing single rows only; suggestion: process 8-16 rows at least
 	*/
-	#undef max
+#undef max
 
 	void scale(size_t factor, //valid range: 2 - 6
 		const uint32_t* src, uint32_t* trg, int srcWidth, int srcHeight,

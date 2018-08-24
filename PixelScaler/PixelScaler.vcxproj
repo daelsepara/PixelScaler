@@ -140,6 +140,7 @@
     <ClInclude Include="Interpolate4.h" />
     <ClInclude Include="Interpolate8.h" />
     <ClInclude Include="kreed.h" />
+    <ClInclude Include="Kuwahara.h" />
     <ClInclude Include="lodepng.h" />
     <ClInclude Include="lq.h" />
     <ClInclude Include="Parameters.h" />

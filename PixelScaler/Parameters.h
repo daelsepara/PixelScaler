@@ -51,6 +51,10 @@ public:
 	bool SuperSAI = false;
 	bool SuperEagle = false;
 	bool ReverseAA = false;
+	bool Kuwahara = false;
+	bool Kuwahara7 = false;
+	bool Kuwahara9 = false;
 
 	int Magnification = 1;
+	int Window = 5;
 };

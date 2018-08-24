@@ -3,7 +3,7 @@
 void FlipUD(unsigned char* src, int sizex, int sizey)
 {
 	auto Channels = 3;
-	
+
 	if (src != NULL)
 	{
 		for (auto y = 0; y < sizey / 2; y++)
