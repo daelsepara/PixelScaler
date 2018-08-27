@@ -1,6 +1,6 @@
 GPP=nvcc
 CPP=clang++
-INCLUDES=-I/usr/local/include -I/usr/include -I/usr/include/opencv2
+INCLUDES=-I/usr/local/include -I/usr/include -I/usr/include/opencv2 -I/usr/local/include/opencv-3.4.2/
 LIB=-L/usr/local/lib -L/usr/lib -lopencv_core -lopencv_highgui -lopencv_imgcodecs
 UNAME_s := $(shell uname -s)
 MSG=VERSION
