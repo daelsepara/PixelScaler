@@ -97,5 +97,6 @@ void _Kuwahara(unsigned char *ScaledImage, unsigned char* Input, int srcx, int s
 		}
 	}
 
-	delete[] mean, variance;
+	delete[] mean;
+	delete[] variance;
 }
